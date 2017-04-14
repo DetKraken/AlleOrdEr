@@ -1,38 +1,34 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import tweepy
 import time
 
-def ordTest(tid,txtArray):
-    print "Start : %s" % time.ctime()
-    time.sleep(1200)
-    print "End : $s" % time.ctime()
+keyList = []
 
-def set_text(txtfile):
+def AlleOrdEr(pretext, words):
+    #Create a function that calls and gets total tweets so I dont have to manually edit this shit pls~
+    for i in range(122, len(words)):
+        tweet = '{0}{1}'.format(pretext, words[i])
+        tweet = tweet.decode('unicode_escape').encode('utf-8')
+        api.update_status(tweet)
+        time.sleep(1800)
+
+def setText(txtFile):
     wordList = []
-    with open(txtfile, 'r') as f:
+    with open(txtFile, 'r') as f:
         for line in f:
             wordList.append(line)
     wordList.sort()
-    f.close()
     return wordList
 
-def AlleOrdEr(pretext, words):
-    f.close()
-    for i in range(0, len(words)):
-        api.update_status('{0}{1}'.format(pretext, words[i]))
-        time.sleep(600)
-
-
-with open('/var/www/html/kraken.work/Twitter_bots/AlleOrdEr/Pik/src/keys.txt', 'r') as f:
+with open('/src/keys.txt', 'r') as f:
     keys = f.read()
-    keyList = keys.split(";")
+    keyList = keys.split(';')
     f.close()
 
-ck = keyList[0]
-cs = keyList[1]
-at = keyList[2]
-ats = keyList[3]
-auth = tweepy.OAuthHandler(ck, cs)
-auth.set_access_token(at, ats)
+auth = tweepy.OAuthHandler(keyList[0],keyList[1])
+auth.set_access_token(keyList[2],keyList[3])
 api = tweepy.API(auth)
 
-AlleOrdEr("Pik ",set_text('/var/www/html/kraken.work/Twitter_bots/AlleOrdEr/Pik/src/danish_words.text'))
+AlleOrdEr("Pik ", setText('/src/danish_words.text'))
